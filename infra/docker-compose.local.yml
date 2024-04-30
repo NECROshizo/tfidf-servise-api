@@ -1,0 +1,19 @@
+version: "3.9"
+
+services:
+
+  app:
+    build:
+      context: ../
+      dockerfile: ./src/app/Dockerfile
+    container_name: tf_idf_app
+    restart: always
+    networks:
+      - services
+    ports:
+      - 80:80
+
+
+networks:
+  services:
+    name: tf_idf_service
