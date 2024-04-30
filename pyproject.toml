@@ -1,0 +1,44 @@
+[tool.poetry]
+name = "tfidf-servise-api"
+version = "0.1.0"
+description = ""
+authors = ["NECROshizo <necroshizo@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.110.3"
+uvicorn = {extras = ["standard"], version = "^0.29.0"}
+
+
+[tool.poetry.group.dev.dependencies]
+pre-commit = "^3.7.0"
+ruff = "^0.4.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".mypy_cache",
+    ".pytest_cache",
+    ".pytype",
+    ".ruff_cache",
+    ".venv",
+    ".vscode",
+    "venv",
+]
+target-version = "py311"
+line-length = 120
+lint.ignore = ["D"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "tab"
+docstring-code-format = true
