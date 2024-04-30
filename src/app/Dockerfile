@@ -13,6 +13,8 @@ COPY ../pyproject.toml ../poetry.lock* /WEB_APP/
 
 COPY ./src/app ./src/app
 
+COPY ./src/core ./src/core
+
 RUN poetry install --no-dev --no-cache --no-interaction --no-ansi
 
 CMD ["uvicorn", "src.app.main:app", "--host", "0.0.0.0", "--port", "80"]
