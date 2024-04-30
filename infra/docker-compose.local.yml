@@ -3,7 +3,7 @@ version: "3.9"
 services:
 
   redis:
-    image: redis:7.2
+    image: redis:7.2-alpine
     container_name: tf_idf_redis
     command: ["redis-server", "--requirepass", "${REDIS_PASSWORD}"]
     restart: always
@@ -31,10 +31,12 @@ services:
       - ../.env
     container_name: tf_idf_app
     restart: always
-    networks:
-      - services
+    command:
+      ["uvicorn", "src.app.main:app", "--host", "0.0.0.0", "--port", "80" ]
     ports:
       - 80:80
+    networks:
+      - services
 
 volumes:
   redis_data:
