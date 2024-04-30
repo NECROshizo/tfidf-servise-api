@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
 from src.app.api import main_router
@@ -8,7 +9,9 @@ app = FastAPI(redoc_url=None)
 
 app.include_router(main_router)
 
-templates = Jinja2Templates(directory="src/app/templates")
+app.mount("/static", StaticFiles(directory="src/app/static"), name="static")
+
+templates = Jinja2Templates(directory="src/app/static/templates")
 
 
 @app.get(
