@@ -3,11 +3,11 @@ from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
-from src.app.api import main_router
+from src.app.api import main_router_api
 
 app = FastAPI(redoc_url=None)
 
-app.include_router(main_router)
+app.include_router(main_router_api)
 
 app.mount("/static", StaticFiles(directory="src/app/static"), name="static")
 
