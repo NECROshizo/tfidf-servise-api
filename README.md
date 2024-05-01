@@ -16,6 +16,7 @@ IDF (Inverse Document Frequency) - это мера того, насколько 
 [![Swagger](https://img.shields.io/badge/Swagger-Latest-blue?style=flat&logo=swagger&logoColor=white)](https://swagger.io/)
 [![Docker](https://img.shields.io/badge/Docker-Latest-blue?style=flat&logo=docker&logoColor=white)](https://www.docker.com/)
 [![Redis](https://img.shields.io/badge/Redis-Latest-blue?style=flat&logo=redis&logoColor=white)](https://redis.io/)
+[![RabbitMQ](https://img.shields.io/badge/RabbitMQ-Latest-blue?style=flat&logo=rabbitmq&logoColor=white)](https://www.rabbitmq.com/)
 ### Библиотеки и фреймворки
 [![FastAPI](https://img.shields.io/badge/FastAPI-%5E0.110.3-blue?style=flat&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
 [![Uvicorn](https://img.shields.io/badge/Uvicorn-%5E0.29.0-blue?style=flat&logo=python&logoColor=white)](https://www.uvicorn.org/)
