@@ -24,4 +24,4 @@ async def get_tf_idf(content: UploadFile) -> list[dict[str, Any]]:
 
 		result.append({"word": word, "tf": tf, "idf": idf})
 
-	return sorted(result, key=lambda x: (-x["tf"], x["word"]))[:5]
+	return sorted(result, key=lambda x: (-x["tf"], x["word"]))[:50]

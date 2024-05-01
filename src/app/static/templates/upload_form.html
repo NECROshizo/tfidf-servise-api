@@ -12,6 +12,7 @@
         <input type="file" name="file">
         <button type="submit">Загрузить</button>
     </form>
+    <div id="errorContainer" style="color: red;"></div>
     <div id="tableContainer"></div>
 
     <script>
@@ -22,13 +23,20 @@
                 method: 'POST',
                 body: formData
             });
-            let data = await response.json();
-            let tableHTML = "<h2 style='text-align: center;'>Данные из файла:</h2><table><tr><th>Слово</th><th>TF</th><th>IDF</th></tr>";
-            data.forEach(function(item) {
-                tableHTML += "<tr><td>" + item.word + "</td><td>" + item.tf + "</td><td>" + item.idf + "</td></tr>";
-            });
-            tableHTML += "</table>";
-            document.getElementById("tableContainer").innerHTML = tableHTML;
+            if (response.ok) {
+                let data = await response.json();
+                let tableHTML = "<h2 style='text-align: center;'>Данные из файла:</h2><table><tr><th>Слово</th><th>TF</th><th>IDF</th></tr>";
+                data.forEach(function(item) {
+                    tableHTML += "<tr><td>" + item.word + "</td><td>" + item.tf + "</td><td>" + item.idf + "</td></tr>";
+                });
+                tableHTML += "</table>";
+                document.getElementById("tableContainer").innerHTML = tableHTML;
+                document.getElementById("errorContainer").innerText = "";
+            } else {
+                let errorData = await response.json();
+                document.getElementById("errorContainer").innerText = errorData.detail;
+                document.getElementById("tableContainer").innerHTML = "";
+            }
         });
     </script>
 </body>
