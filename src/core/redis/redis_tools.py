@@ -1,7 +1,7 @@
-# from redis.asyncio import Redis # TODO: asyn? async witch
 from functools import wraps
 import logging
-from redis import Redis, RedisError
+
+from redis.asyncio import Redis, RedisError
 
 from src.core.redis import RedisSettings, redis_settings
 
@@ -18,24 +18,30 @@ class RedisTools:
 		)
 
 	@staticmethod
-	def __check_error(method):
+	def __handle_redis_errors(method):
 		@wraps(method)
-		def wrapper(*args, **kwargs):
+		async def wrapper(*args, **kwargs):
 			try:
-				return method(*args, **kwargs)
+				return await method(*args, **kwargs)
 			except RedisError as e:
-				logging.error(f"Ошибка выполнения запроса redis: {e}")
+				logging.error(f"Ошибка выполнения запроса({method.__name__}) redis: {e}")
 				raise
 
 		return wrapper
 
-	@__check_error
-	def increment_or_create(self, key: str):
+	@__handle_redis_errors
+	async def increment_or_create(self, key: str):
 		return self.__redis_client.hincrby("count", key)
 
-	@__check_error
-	def increment_docs(self):
+	@__handle_redis_errors
+	async def increment_docs(self):
 		return self.__redis_client.hincrby("docs", "docs_count")
+
+	async def __aenter__(self) -> Redis:
+		return self.__redis_client
+
+	async def __aexit__(self):
+		self.__redis_client.aclose()
 
 
 redis_tools = RedisTools(redis_settings)
