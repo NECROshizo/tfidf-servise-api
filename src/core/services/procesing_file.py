@@ -14,7 +14,7 @@ async def get_tf_idf(content: UploadFile, output_values: int = 50) -> list[dict[
 	result = []
 
 	async with redis_tools as redis:
-		all_docs = redis.increment_docs()
+		all_docs = await redis.increment_docs()
 		while True:
 			chunk = await content.read(CHUNK_SIZE)
 			if not chunk:
@@ -26,7 +26,7 @@ async def get_tf_idf(content: UploadFile, output_values: int = 50) -> list[dict[
 
 		for word, count in words_counter.items():
 			tf = count / sum_all_words
-			docs_count = redis.increment_or_create(word)
+			docs_count = await redis.increment_or_create(word)
 			idf = math.log(all_docs / docs_count)
 
 			result.append({"word": word, "tf": tf, "idf": idf})

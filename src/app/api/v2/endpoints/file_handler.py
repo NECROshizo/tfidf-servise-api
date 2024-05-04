@@ -2,7 +2,7 @@ from fastapi import APIRouter, File, status, UploadFile
 
 from src.app.api.validators import check_file_type
 from src.app.api.shemas import ErrorSchema, WordTFIDF
-from src.core.services import get_tf_idf
+from src.core.rabbit.publisher import WorkerRabbitPublisher
 
 
 router = APIRouter()
@@ -19,5 +19,6 @@ router = APIRouter()
 async def upload_file(file: UploadFile = File(...)) -> list[WordTFIDF]:
 	"""Обработка файла"""
 	await check_file_type(file.filename, ".txt")
-	top_tf_idf = await get_tf_idf(file)
-	return top_tf_idf
+	publisher = WorkerRabbitPublisher("in_worker")
+	await publisher.publish(file)
+	return [{"word": "ok", "tf": 33, "idf": 33}]
