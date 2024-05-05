@@ -31,17 +31,17 @@ class RedisTools:
 
 	@__handle_redis_errors
 	async def increment_or_create(self, key: str):
-		return self.__redis_client.hincrby("count", key)
+		return await self.__redis_client.hincrby("count", key)
 
 	@__handle_redis_errors
 	async def increment_docs(self):
-		return self.__redis_client.hincrby("docs", "docs_count")
+		return await self.__redis_client.hincrby("docs", "docs_count")
 
 	async def __aenter__(self) -> Redis:
-		return self.__redis_client
+		return self
 
-	async def __aexit__(self):
-		self.__redis_client.aclose()
+	async def __aexit__(self, exc_type, exc_value, traceback):
+		await self.__redis_client.aclose()
 
 
 redis_tools = RedisTools(redis_settings)
